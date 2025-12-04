@@ -1,9 +1,7 @@
 package strategy.mocks;
 
-import java.io.IOException;
 import java.util.List;
 import sanguine.controller.ModelFeaturesListener;
-import sanguine.model.ReadOnlySanguine;
 import sanguine.model.Sanguine;
 import sanguine.model.card.BasicCard;
 import sanguine.model.card.Card;
@@ -54,7 +52,9 @@ public class SanguineOnlyAllowsMoveToRowZeroColZeroMock implements Sanguine {
    * @param listener listens and shi to the publisher.
    */
   @Override
-  public void subscribe(ModelFeaturesListener listener) {this.model.subscribe(listener);}
+  public void subscribe(ModelFeaturesListener listener) {
+    this.model.subscribe(listener);
+  }
 
   @Override
   public int rowScore(int row, Player p) {

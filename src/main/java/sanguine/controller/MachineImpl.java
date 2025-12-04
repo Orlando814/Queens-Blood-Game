@@ -1,7 +1,6 @@
 package sanguine.controller;
 
 import sanguine.model.ReadOnlySanguine;
-import sanguine.model.Sanguine;
 import sanguine.model.cell.Player;
 import sanguine.strategy.MoveValues;
 import sanguine.strategy.Strategy;

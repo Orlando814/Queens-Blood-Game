@@ -39,7 +39,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
   //represents if the game has started, just makes sure that the game is started before any mo
   //moves or actions can be done.
   private boolean gameStarted;
-  private List<ModelFeaturesListener> listeners;
+  private final List<ModelFeaturesListener> listeners;
 
   /**
    * will just instantiate all the values to their relevant values.

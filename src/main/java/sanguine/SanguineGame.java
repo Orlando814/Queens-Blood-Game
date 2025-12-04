@@ -13,8 +13,6 @@ import sanguine.model.card.Card;
 import sanguine.model.cell.Player;
 import sanguine.model.deck.DeckCreator;
 import sanguine.model.deck.DeckCreatorImpl;
-import sanguine.strategy.FirstMove;
-import sanguine.strategy.GreedyMove;
 import sanguine.view.SanguineGuiFrame;
 import sanguine.view.SanguineGuiView;
 
