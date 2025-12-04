@@ -10,7 +10,7 @@ import sanguine.model.cell.Player;
  * This represents a read-only version of the model. Is intended to be used by the view as the view
  * should never be able to mutate the model. It should only be able to observe it.
  */
-public class ReadOnlyBasicSanguine implements ReadOnlySanguine {
+public class ReadOnlyBasicSanguine implements ReadOnlySanguine, ModelFeaturesListener {
 
   private final Sanguine model;
 

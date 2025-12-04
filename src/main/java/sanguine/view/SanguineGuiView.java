@@ -1,6 +1,7 @@
 package sanguine.view;
 
 import sanguine.controller.FeaturesListener;
+import sanguine.model.cell.Player;
 
 /**
  * This interface represents a view for the Sanguine game that is a GUI instead of something
@@ -33,10 +34,23 @@ public interface SanguineGuiView {
   void clickCard(int cardIndex);
 
   /**
-   * will set the posn in he board class to make sure that there is a way to highlight the location
+   * will set the posn in the board class to make sure that there is a way to highlight the location
    * of a given card.
    *
    * @param position the position we are doing this at.
    */
   void setPosn(Position position);
+
+  /**
+   * Will display when the user has made an invalid move.
+   */
+  void showInvalidMove();
+
+  /**
+   * * Will appear when the game has ended and show the winning player / their score.
+   *
+   * @param player is the player that won the game.
+   * @param score is the winning player's score.
+   */
+  void showGameOver(Player player, int score);
 }

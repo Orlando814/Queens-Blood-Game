@@ -1,14 +1,18 @@
 package sanguine.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JPanel;
 import sanguine.controller.FeaturesListener;
 import sanguine.model.ReadOnlySanguine;
+import sanguine.model.card.Card;
 import sanguine.model.cell.Player;
 
 /**
@@ -19,6 +23,7 @@ public class SanguineHandPanel extends JPanel {
   private final ReadOnlySanguine model;
   private final Player player;
   private int clickedCard;
+  private List<Card> cards;
 
   /**
    * This is the constructor for this class. It first does some error checking and then adds
@@ -35,18 +40,29 @@ public class SanguineHandPanel extends JPanel {
     this.model = model;
     this.player = player;
     this.clickedCard = -1;
+    this.cards = new ArrayList<>();
     this.setLayout(new GridLayout(1, 0, 0, 0));
-    for (int cardIndex = 0; cardIndex < model.getHandSize(player); cardIndex++) {
-      JPanel card = new SanguineCardPanel(model.getCardInHand(player, cardIndex), player);
-      card.setOpaque(false);
-      this.add(card);
-    }
+    this.getCards();
   }
-  
+
+  /**
+   * Will update the current cards in the hand by creating a new / updated version of the hand
+   * deck and replacing the old one with the new one.
+   */
+  private void getCards() {
+    List<Card> newCards = new ArrayList<>();
+    for (int cardIndex = 0; cardIndex < model.getHandSize(player); cardIndex++) {
+      Card card = model.getCardInHand(player, cardIndex);
+      newCards.add(card);
+    }
+    this.cards = newCards;
+  }
+
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g.create();
+    this.getCards();
     for (int cardIndex = 0; cardIndex < model.getHandSize(player); cardIndex++) {
       if (this.clickedCard == cardIndex) {
         g2d.setColor(Color.MAGENTA);
@@ -60,6 +76,34 @@ public class SanguineHandPanel extends JPanel {
       int cardWidth = this.getWidth() / model.getHandSize(this.player);
       g2d.fillRect(cardWidth * cardIndex, 0,
           cardWidth * cardIndex + cardWidth, this.getHeight());
+    }
+    g2d.setColor(Color.BLACK);
+    this.drawCards(g2d);
+  }
+
+  /**
+   * will draw the current cards, name, cost, influence, value.
+   *
+   * @param g2d the graphics object.
+   */
+  private void drawCards(Graphics2D g2d) {
+    int fontSize = this.getHeight() / 10;
+    int cardSize = this.getWidth() / model.getHandSize(this.player);
+    Font font = new Font("Arial", Font.BOLD, fontSize);
+    g2d.setFont(font);
+    int cardCount = 0;
+    for (Card card : this.cards) {
+      String[] strCard = card.toString().split(System.lineSeparator());
+      g2d.drawString(strCard[0], cardSize * cardCount, fontSize);
+      g2d.drawString(strCard[1], cardSize * cardCount, fontSize * 2);
+      g2d.drawString(strCard[2], cardSize * cardCount, fontSize * 3);
+      for (int influenceRow = 3; influenceRow < strCard.length; influenceRow++) {
+        g2d.drawString(strCard[influenceRow], cardSize * cardCount,
+            this.getHeight() / 2 + (fontSize * (-3 + influenceRow)));
+      }
+      g2d.drawLine(cardSize * cardCount, 0, cardSize * cardCount, this.getHeight());
+      g2d.drawLine(2 * cardSize * cardCount, 0, 2 * cardSize * cardCount, this.getHeight());
+      cardCount++;
     }
   }
 
