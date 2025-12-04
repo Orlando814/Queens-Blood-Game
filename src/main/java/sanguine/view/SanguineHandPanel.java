@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import sanguine.controller.FeaturesListener;
+import sanguine.controller.ViewFeaturesListener;
 import sanguine.model.ReadOnlySanguine;
 import sanguine.model.card.Card;
 import sanguine.model.cell.Player;
@@ -113,7 +113,7 @@ public class SanguineHandPanel extends JPanel {
    *
    * @param listener is the controller which is listening to the input from this panel.
    */
-  public void subscribe(FeaturesListener listener) {
+  public void subscribe(ViewFeaturesListener listener) {
     this.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {

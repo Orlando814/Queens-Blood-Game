@@ -2,6 +2,7 @@ package strategy.mocks;
 
 import java.io.IOException;
 import java.util.List;
+import sanguine.controller.ModelFeaturesListener;
 import sanguine.model.Sanguine;
 import sanguine.model.card.BasicCard;
 import sanguine.model.card.Card;
@@ -62,6 +63,16 @@ public class RecordModelMethodCallsMock implements Sanguine {
       throw new RuntimeException(e);
     }
     model.passMove();
+  }
+
+  /**
+   * will subscriber to the publisher.
+   *
+   * @param listener listens and shi to the publisher.
+   */
+  @Override
+  public void subscribe(ModelFeaturesListener listener) {
+    this.model.subscribe(listener);
   }
 
   @Override
