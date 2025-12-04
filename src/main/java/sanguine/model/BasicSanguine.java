@@ -185,14 +185,14 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
       this.playerOneHand.remove(c);
       place(c, row, col);
       if (!(this.playerOneCards.isEmpty())) {
-        this.playerOneHand.add(this.playerOneCards.removeFirst());
+        this.playerTwoHand.add(this.playerTwoCards.removeFirst());
       }
       this.curPlayer = Player.PLAYER2;
     } else {
       this.playerTwoHand.remove(c);
       place(c, row, col);
       if (!(this.playerTwoCards.isEmpty())) {
-        this.playerTwoHand.add(this.playerTwoCards.removeFirst());
+        this.playerOneHand.add(this.playerOneCards.removeFirst());
       }
       this.curPlayer = Player.PLAYER1;
     }

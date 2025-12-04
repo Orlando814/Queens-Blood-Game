@@ -8,6 +8,7 @@ import sanguine.model.card.Card;
  * checking if the game is over, and other relevant things.
  */
 public interface Sanguine extends ReadOnlySanguine {
+  //TODO: add a subscrbe method and its impl
 
   /**
    * represents the starting of the game. Will make sure that we have valid rows and columns and

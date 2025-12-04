@@ -1,10 +1,10 @@
 package sanguine.view;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import sanguine.controller.FeaturesListener;
@@ -89,5 +89,17 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView {
    */
   public void setPosn(Position position) {
     this.board.setPosn(position);
+  }
+
+  @Override
+  public void showInvalidMove() {
+    showMessageDialog(this, "Invalid Move");
+  }
+
+  @Override
+  public void showGameOver(Player player, int score) {
+    showMessageDialog(this, "Game Over"
+        + System.lineSeparator() + "Winning Player: " + player.toString()
+        + System.lineSeparator() + "Player Score: " + score);
   }
 }
