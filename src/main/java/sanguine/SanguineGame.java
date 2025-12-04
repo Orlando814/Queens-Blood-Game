@@ -2,6 +2,8 @@ package sanguine;
 
 import java.util.List;
 import sanguine.controller.BasicSanguineController;
+import sanguine.controller.PlayerAction;
+import sanguine.controller.PlayerImpl;
 import sanguine.controller.SanguineController;
 import sanguine.model.BasicSanguine;
 import sanguine.model.ReadOnlyBasicSanguine;
@@ -11,8 +13,6 @@ import sanguine.model.card.Card;
 import sanguine.model.cell.Player;
 import sanguine.model.deck.DeckCreator;
 import sanguine.model.deck.DeckCreatorImpl;
-import sanguine.strategy.FirstMove;
-import sanguine.strategy.GreedyMove;
 import sanguine.view.SanguineGuiFrame;
 import sanguine.view.SanguineGuiView;
 
@@ -35,10 +35,10 @@ public final class SanguineGame {
     ReadOnlySanguine readOnlyModel = new ReadOnlyBasicSanguine(model);
     SanguineGuiView viewP1 = new SanguineGuiFrame(readOnlyModel, Player.PLAYER1);
     SanguineGuiView viewP2 = new SanguineGuiFrame(readOnlyModel, Player.PLAYER2);
-    SanguineController controllerP1 = new BasicSanguineController(viewP1, Player.PLAYER1,
-        new FirstMove());
-    SanguineController controllerP2 = new BasicSanguineController(viewP2, Player.PLAYER2,
-        new FirstMove());
+    PlayerAction humanP1 = new PlayerImpl(Player.PLAYER1);
+    PlayerAction humanP2 = new PlayerImpl(Player.PLAYER2);
+    SanguineController controllerP1 = new BasicSanguineController(viewP1, humanP1);
+    SanguineController controllerP2 = new BasicSanguineController(viewP2, humanP2);
     controllerP1.playGame(model);
     controllerP2.playGame(model);
     model.placeCard(model.getHand(Player.PLAYER1).getFirst(), 1, 0);

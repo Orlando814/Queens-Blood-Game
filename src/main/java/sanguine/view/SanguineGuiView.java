@@ -1,6 +1,6 @@
 package sanguine.view;
 
-import sanguine.controller.FeaturesListener;
+import sanguine.controller.ViewFeaturesListener;
 import sanguine.model.cell.Player;
 
 /**
@@ -22,9 +22,9 @@ public interface SanguineGuiView {
   /**
    * will subscriber to the publisher.
    *
-   * @param listener listens and shi to the listener.
+   * @param listener listens and shi to the publisher.
    */
-  void subscribe(FeaturesListener listener);
+  void subscribe(ViewFeaturesListener listener);
 
   /**
    * This will highlight a card that the user has clicked.

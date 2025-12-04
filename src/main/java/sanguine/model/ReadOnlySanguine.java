@@ -1,6 +1,7 @@
 package sanguine.model;
 
 import java.util.List;
+import sanguine.controller.ModelFeaturesListener;
 import sanguine.model.card.BasicCard;
 import sanguine.model.card.Card;
 import sanguine.model.cell.BoardInput;
@@ -11,6 +12,13 @@ import sanguine.model.cell.Player;
  * from being able to mutate our model.
  */
 public interface ReadOnlySanguine {
+
+  /**
+   * will subscriber to the publisher.
+   *
+   * @param listener listens and shi to the publisher.
+   */
+  void subscribe(ModelFeaturesListener listener);
 
   /**
    * will get the score of a given row of the board.

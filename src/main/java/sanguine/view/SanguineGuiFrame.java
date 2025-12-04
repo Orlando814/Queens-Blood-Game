@@ -7,7 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import sanguine.controller.FeaturesListener;
+import sanguine.controller.ViewFeaturesListener;
 import sanguine.model.ReadOnlySanguine;
 import sanguine.model.cell.Player;
 
@@ -65,7 +65,7 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView {
    * @param listener listens and shi to the listener.
    */
   @Override
-  public void subscribe(FeaturesListener listener) {
+  public void subscribe(ViewFeaturesListener listener) {
     board.subscribe(listener);
     hand.subscribe(listener);
     this.addKeyListener(new KeyAdapter() {

@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
-import sanguine.controller.FeaturesListener;
+import sanguine.controller.ViewFeaturesListener;
 import sanguine.model.ReadOnlySanguine;
 import sanguine.model.card.BasicCard;
 import sanguine.model.cell.BoardInput;
@@ -45,7 +45,7 @@ public class SanguineBoardPanel extends JPanel {
    *
    * @param listener the inputted listener.
    */
-  public void subscribe(FeaturesListener listener) {
+  public void subscribe(ViewFeaturesListener listener) {
     this.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {

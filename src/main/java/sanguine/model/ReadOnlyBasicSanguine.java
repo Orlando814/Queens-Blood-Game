@@ -1,6 +1,7 @@
 package sanguine.model;
 
 import java.util.List;
+import sanguine.controller.ModelFeaturesListener;
 import sanguine.model.card.BasicCard;
 import sanguine.model.card.Card;
 import sanguine.model.cell.BoardInput;
@@ -10,7 +11,7 @@ import sanguine.model.cell.Player;
  * This represents a read-only version of the model. Is intended to be used by the view as the view
  * should never be able to mutate the model. It should only be able to observe it.
  */
-public class ReadOnlyBasicSanguine implements ReadOnlySanguine, ModelFeaturesListener {
+public class ReadOnlyBasicSanguine implements ReadOnlySanguine {
 
   private final Sanguine model;
 
@@ -159,5 +160,10 @@ public class ReadOnlyBasicSanguine implements ReadOnlySanguine, ModelFeaturesLis
   @Override
   public boolean isValidMove(BasicCard c, int row, int col, Player player) {
     return this.model.isValidMove(c, row, col, player);
+  }
+
+  @Override
+  public void subscribe(ModelFeaturesListener listener) {
+    this.model.subscribe(listener);
   }
 }

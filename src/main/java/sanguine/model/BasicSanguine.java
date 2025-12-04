@@ -2,6 +2,7 @@ package sanguine.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import sanguine.controller.ModelFeaturesListener;
 import sanguine.model.card.BasicCard;
 import sanguine.model.card.Card;
 import sanguine.model.card.CardInfluence;
@@ -38,6 +39,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
   //represents if the game has started, just makes sure that the game is started before any mo
   //moves or actions can be done.
   private boolean gameStarted;
+  private final List<ModelFeaturesListener> listeners;
 
   /**
    * will just instantiate all the values to their relevant values.
@@ -53,6 +55,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
     this.consecutivePasses = 0;
     this.curPlayer = Player.PLAYER1; //INVARIANT: This will only be Player.PLAYER1 or Player.PLAYER2
     this.gameStarted = false;
+    this.listeners = new ArrayList<>();
   }
 
   /**
@@ -185,18 +188,21 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
       this.playerOneHand.remove(c);
       place(c, row, col);
       if (!(this.playerOneCards.isEmpty())) {
-        this.playerTwoHand.add(this.playerTwoCards.removeFirst());
+        this.playerOneHand.add(this.playerOneCards.removeFirst());
       }
       this.curPlayer = Player.PLAYER2;
     } else {
       this.playerTwoHand.remove(c);
       place(c, row, col);
       if (!(this.playerTwoCards.isEmpty())) {
-        this.playerOneHand.add(this.playerOneCards.removeFirst());
+        this.playerTwoHand.add(this.playerTwoCards.removeFirst());
       }
       this.curPlayer = Player.PLAYER1;
     }
     this.consecutivePasses = 0;
+    if (this.listeners != null) {
+      this.notifyListeners();
+    }
   }
 
   /**
@@ -221,10 +227,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
         return false;
       }
     }
-    if (curPos.getPlayer() != player) {
-      return false;
-    }
-    return true;
+    return curPos.getPlayer() == player;
   }
 
   /**
@@ -242,10 +245,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
     if (bc.getCost() > curPos.getPawns().getValue()) {
       return false;
     }
-    if (curPos.getPlayer() != player) {
-      return false;
-    }
-    return true;
+    return curPos.getPlayer() == player;
   }
 
   /**
@@ -431,19 +431,26 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
    */
   @Override
   public void passMove() {
-    if (this.curPlayer == Player.PLAYER1) {
-      curPlayer = Player.PLAYER2;
+    if (this.curPlayer == Player.PLAYER2) {
+      curPlayer = Player.PLAYER1;
       if (!(this.playerTwoCards.isEmpty())) {
         this.playerTwoHand.add(this.playerTwoCards.removeFirst());
       }
       this.consecutivePasses++;
+      if (this.listeners != null) {
+        this.notifyListeners();
+      }
       return;
+    } else {
+      curPlayer = Player.PLAYER2;
+      if (!(this.playerOneCards.isEmpty())) {
+        this.playerOneHand.add(this.playerOneCards.removeFirst());
+      }
+      this.consecutivePasses++;
+      if (this.listeners != null) {
+        this.notifyListeners();
+      }
     }
-    curPlayer = Player.PLAYER1;
-    if (!(this.playerOneCards.isEmpty())) {
-      this.playerOneHand.add(this.playerOneCards.removeFirst());
-    }
-    this.consecutivePasses++;
   }
 
   /**
@@ -598,4 +605,21 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
   public Player getPlayer() {
     return this.curPlayer;
   }
+
+  @Override
+  public void subscribe(ModelFeaturesListener listener) {
+    if (!this.listeners.contains(listener)) {
+      this.listeners.add(listener);
+    }
+  }
+
+  /**
+   * Notifies all the listeners that are currently subscribed to this.
+   */
+  private void notifyListeners() {
+    for (ModelFeaturesListener listener : this.listeners) {
+      listener.whoseTurn(this.curPlayer);
+    }
+  }
+  
 }

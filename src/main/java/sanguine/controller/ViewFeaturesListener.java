@@ -3,9 +3,10 @@ package sanguine.controller;
 import sanguine.model.cell.Player;
 
 /**
- * interface that holds the reference to the on mouse click.
+ * interface that holds the reference to the on mouse / key click. Represents a listener whose
+ * listening to specific view events.
  */
-public interface FeaturesListener {
+public interface ViewFeaturesListener {
 
   /**
    * will execute based on if a mouse event occurred in the board frame.
