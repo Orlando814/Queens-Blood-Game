@@ -1,5 +1,6 @@
 package sanguine.strategy;
 
+import java.util.Objects;
 import sanguine.model.card.Card;
 import sanguine.model.cell.Player;
 
@@ -19,10 +20,10 @@ public class MoveValues {
    * we do NOT need to null check any of these since we will be only passing in input from our
    * strategy, the user cannot mess with this.
    *
-   * @param row the relevant row from 0 to max rows - 1.
-   * @param col the relevant col from 0 to max cols - 1.
+   * @param row    the relevant row from 0 to max rows - 1.
+   * @param col    the relevant col from 0 to max cols - 1.
    * @param player the player who we are doing the move for.
-   * @param card the card that we are trying to move.
+   * @param card   the card that we are trying to move.
    */
   public MoveValues(int row, int col, Player player, Card card) {
     this.row = row;
@@ -66,4 +67,33 @@ public class MoveValues {
   public Card getCard() {
     return this.card;
   }
+
+  /**
+   * Overwrites the equals method for this class.
+   *
+   * @param obj the reference object with which to compare.
+   * @return a boolean saying if the given object is equal to this.
+   */
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof MoveValues)) {
+      return false;
+    }
+    MoveValues that = (MoveValues) obj;
+    return this.row == that.row && this.col == that.col
+        && this.player == that.player && this.card == that.card;
+  }
+
+  /**
+   * Overwrites the hashcode method of this to be based on the fields of this class and not its
+   * reference.
+   *
+   * @return a unique int that represents this.
+   */
+  public int hashCode() {
+    return Objects.hash(this.row, this.col, this.player, this.card);
+  }
+
 }

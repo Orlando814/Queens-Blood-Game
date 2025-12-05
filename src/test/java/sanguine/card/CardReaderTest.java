@@ -41,23 +41,23 @@ public class CardReaderTest {
     File deckConfig = new File("config" + File.separator + "red.deck");
     CardReader cardReader = new ReadCardFile(deckConfig);
     List<String> cards = cardReader.showCards();
-    assertEquals("Security 1 1\n"
-        + "XXXXX\n"
-        + "XXIXX\n"
-        + "XICIX\n"
-        + "XXIXX\n"
+    assertEquals("Security 1 1" + System.lineSeparator()
+        + "XXXXX" + System.lineSeparator()
+        + "XXIXX" +  System.lineSeparator()
+        + "XICIX" +  System.lineSeparator()
+        + "XXIXX" + System.lineSeparator()
         + "XXXXX", cards.getFirst());
-    assertEquals("Wheel 1 1\n"
-        + "XXXXI\n"
-        + "XXXXX\n"
-        + "XXCXX\n"
-        + "XXXXX\n"
+    assertEquals("Wheel 1 1" + System.lineSeparator()
+        + "XXXXI" + System.lineSeparator()
+        + "XXXXX" + System.lineSeparator()
+        + "XXCXX" + System.lineSeparator()
+        + "XXXXX" + System.lineSeparator()
         + "XXXXI", cards.get(5));
-    assertEquals("Rider 3 5\n"
-        + "XXXXX\n"
-        + "XXXXX\n"
-        + "XXCIX\n"
-        + "XIIIX\n"
+    assertEquals("Rider 3 5" + System.lineSeparator()
+        + "XXXXX" + System.lineSeparator()
+        + "XXXXX" + System.lineSeparator()
+        + "XXCIX" + System.lineSeparator()
+        + "XIIIX" + System.lineSeparator()
         + "XXXXX", cards.getLast());
   }
 

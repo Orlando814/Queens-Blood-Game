@@ -1,7 +1,9 @@
 package strategy;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,42 @@ public class StrategyTests {
   @Before
   public void setUp() {
     init();
+  }
+
+  @Test
+  public void testMoveValuesEquals() {
+    Card card1 = this.redDeck.getFirst();
+    MoveValues move1 = new MoveValues(1, 2, Player.PLAYER1, card1);
+    MoveValues move1Copy = new MoveValues(1, 2, Player.PLAYER1, card1);
+    MoveValues move2 = new MoveValues(3, 7, Player.PLAYER1, card1);
+    MoveValues move3 = new MoveValues(1, 2, Player.PLAYER2, card1);
+    assertTrue(move1.equals(move1Copy));
+    assertFalse(move1.equals(move2));
+    assertFalse(move1.equals(move3));
+    Card card2 = this.redDeck.get(2);
+    MoveValues move4 = new MoveValues(1, 2, Player.PLAYER1, card2);
+    assertFalse(move1.equals(move4));
+    assertFalse(move2.equals(move3));
+    assertFalse(move2.equals(move4));
+    assertFalse(move3.equals(move4));
+  }
+
+  @Test
+  public void testMoveValuesHashcode() {
+    Card card1 = this.redDeck.getFirst();
+    MoveValues move1 = new MoveValues(1, 2, Player.PLAYER1, card1);
+    MoveValues move1Copy = new MoveValues(1, 2, Player.PLAYER1, card1);
+    MoveValues move2 = new MoveValues(3, 7, Player.PLAYER1, card1);
+    MoveValues move3 = new MoveValues(1, 2, Player.PLAYER2, card1);
+    assertTrue(move1.hashCode() == move1Copy.hashCode());
+    assertFalse(move1.hashCode() == move2.hashCode());
+    assertFalse(move1.hashCode() == move3.hashCode());
+    Card card2 = this.redDeck.get(2);
+    MoveValues move4 = new MoveValues(1, 2, Player.PLAYER1, card2);
+    assertFalse(move2.hashCode() == move4.hashCode());
+    assertFalse(move2.hashCode() == move3.hashCode());
+    assertFalse(move3.hashCode() == move4.hashCode());
+    assertFalse(move1.hashCode() == move4.hashCode());
   }
 
   //test to make sure that the AI picks the first valid move that maximizes the score as much as

@@ -14,4 +14,11 @@ public interface ModelFeaturesListener {
    * @param player is the player whose turn it currently is.
    */
   void whoseTurn(Player player);
+
+  /**
+   * listening for whether the game ended or not, it will also return the player who won the game.
+   *
+   * @param player the player who won the game.
+   */
+  void gameOver(Player player);
 }

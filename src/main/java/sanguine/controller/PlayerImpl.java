@@ -31,11 +31,10 @@ public class PlayerImpl implements PlayerAction {
   }
 
   @Override
-  public MoveValues makeMove(ReadOnlySanguine model) {
-    return null;
+  public void makeMove(ReadOnlySanguine model) {
   }
 
   @Override
-  public void subscribe(PlayerFeaturesListener listener) {
+  public void subscribe(PlayerActionsListener listener) {
   }
 }

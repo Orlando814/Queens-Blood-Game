@@ -10,8 +10,6 @@ public interface SanguineController {
 
   /**
    * will play a full gamme of sanguine from start until end.
-   *
-   * @param model the relevant model that is associated with this game.
    */
-  void playGame(Sanguine model);
+  void playGame();
 }

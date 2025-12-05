@@ -5,20 +5,27 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import sanguine.controller.PlayerAction;
+import sanguine.controller.PlayerActionsListener;
 import sanguine.controller.ViewFeaturesListener;
 import sanguine.model.ReadOnlySanguine;
 import sanguine.model.cell.Player;
+import sanguine.strategy.MoveValues;
 
 /**
  * This represents the Frame of the GUI that contains two panels. These two panels consist of the
  * board and the user's hand of cards.
  */
-public class SanguineGuiFrame extends JFrame implements SanguineGuiView {
+public class SanguineGuiFrame extends JFrame implements SanguineGuiView, PlayerActionsListener {
 
   private final SanguineBoardPanel board;
   private final SanguineHandPanel hand;
+  private ViewFeaturesListener listener;
+  private final ReadOnlySanguine model;
 
   /**
    * This is the constructor for the frame. Takes in a read-only version of the model and creates
@@ -27,7 +34,7 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView {
    *
    * @param model is a read-only version of the model.
    */
-  public SanguineGuiFrame(ReadOnlySanguine model, Player player) {
+  public SanguineGuiFrame(ReadOnlySanguine model, PlayerAction player) {
     super();
     if (model == null || player == null) {
       throw new IllegalArgumentException("Model or player cannot be null.");
@@ -35,12 +42,14 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView {
     setSize(1000, 800);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+    this.model = model;
     this.board = new SanguineBoardPanel(model);
-    this.board.setPreferredSize(new Dimension(this.getWidth(),  3 * (this.getHeight() / 4)));
+    this.board.setPreferredSize(new Dimension(this.getWidth(), 3 * (this.getHeight() / 4)));
     this.hand = new SanguineHandPanel(model, player);
     this.hand.setPreferredSize(new Dimension(this.getWidth(), (this.getHeight() / 4)));
     this.add(this.board);
     this.add(this.hand);
+    player.subscribe(this);
   }
 
   /**
@@ -66,6 +75,7 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView {
    */
   @Override
   public void subscribe(ViewFeaturesListener listener) {
+    this.listener = listener;
     board.subscribe(listener);
     hand.subscribe(listener);
     this.addKeyListener(new KeyAdapter() {
@@ -101,5 +111,18 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView {
     showMessageDialog(this, "Game Over"
         + System.lineSeparator() + "Winning Player: " + player.toString()
         + System.lineSeparator() + "Player Score: " + score);
+  }
+
+  @Override
+  public void hasMoveBeenMade(MoveValues move) {
+    if (move == null) {
+      listener.keyClicked("p");
+    } else {
+      listener.mouseEventBoard(move.getRow(), move.getCol() + 1);
+      listener.mouseEventHand(this.model.getHand(move.getPlayer()).indexOf(move.getCard()),
+          move.getPlayer());
+      System.out.println("got here lol. rizz\n");
+      listener.keyClicked("m");
+    }
   }
 }
