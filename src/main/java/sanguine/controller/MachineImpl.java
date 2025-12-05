@@ -12,6 +12,7 @@ import sanguine.strategy.Strategy;
 public class MachineImpl implements PlayerAction {
   private final Strategy strategy;
   private final Player player;
+  private PlayerActionsListener listener;
 
   /**
    * A regular constructor for this class that takes in a strategy for its arguments.
@@ -29,8 +30,8 @@ public class MachineImpl implements PlayerAction {
   }
 
   @Override
-  public MoveValues makeMove(ReadOnlySanguine model) {
-    return this.strategy.implementMove(model, this.player);
+  public void makeMove(ReadOnlySanguine model) {
+    this.listener.hasMoveBeenMade(this.strategy.implementMove(model, this.player));
   }
 
   @Override
@@ -39,8 +40,7 @@ public class MachineImpl implements PlayerAction {
   }
 
   @Override
-  public void subscribe(PlayerFeaturesListener listener) {
-    //TODO: Fix arguments
-    listener.hasPlayerMoved(true);
+  public void subscribe(PlayerActionsListener listener) {
+    this.listener = listener;
   }
 }

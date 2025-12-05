@@ -98,6 +98,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
     this.playerOneHand = createHand(this.playerOneCards);
     this.playerTwoHand = createHand(this.playerTwoCards);
     this.gameStarted = true;
+    this.notifyListeners();
   }
 
   /**
@@ -200,9 +201,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
       this.curPlayer = Player.PLAYER1;
     }
     this.consecutivePasses = 0;
-    if (this.listeners != null) {
-      this.notifyListeners();
-    }
+    this.notifyListeners();
   }
 
   /**
@@ -437,9 +436,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
         this.playerTwoHand.add(this.playerTwoCards.removeFirst());
       }
       this.consecutivePasses++;
-      if (this.listeners != null) {
-        this.notifyListeners();
-      }
+      this.notifyListeners();
       return;
     } else {
       curPlayer = Player.PLAYER2;
@@ -447,9 +444,7 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
         this.playerOneHand.add(this.playerOneCards.removeFirst());
       }
       this.consecutivePasses++;
-      if (this.listeners != null) {
-        this.notifyListeners();
-      }
+      this.notifyListeners();
     }
   }
 
@@ -617,9 +612,12 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
    * Notifies all the listeners that are currently subscribed to this.
    */
   private void notifyListeners() {
+    System.out.println(this.listeners.size());
     for (ModelFeaturesListener listener : this.listeners) {
       listener.whoseTurn(this.curPlayer);
+      if (this.isGameOver()) {
+        listener.gameOver(this.whoWon());
+      }
     }
   }
-  
 }

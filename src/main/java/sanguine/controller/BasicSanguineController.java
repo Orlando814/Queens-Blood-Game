@@ -1,5 +1,6 @@
 package sanguine.controller;
 
+import sanguine.model.ReadOnlyBasicSanguine;
 import sanguine.model.Sanguine;
 import sanguine.model.card.BasicCard;
 import sanguine.model.card.Card;
@@ -12,7 +13,7 @@ import sanguine.view.SanguineGuiView;
  * represents the gui controller. This will allow for us to interact with the GUI.
  */
 public class BasicSanguineController implements SanguineController, ViewFeaturesListener,
-    ModelFeaturesListener, PlayerFeaturesListener {
+    ModelFeaturesListener {
 
   private final SanguineGuiView view;
   private Sanguine model;
@@ -20,6 +21,8 @@ public class BasicSanguineController implements SanguineController, ViewFeatures
   private Integer cardPos; //represents the posn for the given
   private final PlayerAction player; //the player for this given controller
   private Player currentTurnPlayer; //the player whose current turn it is
+  private boolean isOver;
+  private boolean wasGameOver;
 
   /**
    * generic constructor that will connect the gui and controller.
@@ -28,38 +31,25 @@ public class BasicSanguineController implements SanguineController, ViewFeatures
    * @param player is the player that this controller represents.
    * @throws IllegalArgumentException if any of the given arguments are null.
    */
-  public BasicSanguineController(SanguineGuiView view, PlayerAction player) {
+  public BasicSanguineController(SanguineGuiView view, PlayerAction player,
+                                 Sanguine model) {
     if (view == null || player == null) {
       throw new IllegalArgumentException("Arguments cannot be null");
     }
     this.view = view;
     this.player = player;
     this.view.subscribe(this);
-    this.player.subscribe(this);
+    this.model = model;
   }
 
   @Override
-  public void playGame(Sanguine model) {
-    this.model = model;
-    this.currentTurnPlayer = this.player.getPlayer();
+  public void playGame() {
     this.model.subscribe(this);
+    this.currentTurnPlayer = this.player.getPlayer();
     this.view.makeVisible();
-    //this.makeMove();
   }
-    /*//while loop for the game to continue while the game is not over
-    while (!(model.isGameOver())) {
-      if (this.model.getPlayer() == this.player) {
-        this.makeMove(strategy.implementMove(model, player));
-      }
-    }
-    this.view.showGameOver(this.model.whoWon(), this.model.totalScore(this.model.whoWon()));
-    System.out.println("game over lol");
-  }
-  */
 
-  //TODO: Don't know how to do this (maybe recusion???) not sure
-  private void makeMove() {
-    MoveValues move = this.player.makeMove(this.model);
+  private void makeMove(MoveValues move) {
     if (move == null) {
       model.passMove();
     } else {
@@ -108,18 +98,26 @@ public class BasicSanguineController implements SanguineController, ViewFeatures
                 this.currentTurnPlayer)) {
               this.model.placeCard(bc, this.posn.getX(), this.posn.getY());
               this.view.clickCard(-1);
+              this.view.setPosn(new Position(-1, -1));
             } else {
               this.view.showInvalidMove();
+              this.view.clickCard(-1);
+              this.view.setPosn(new Position(-1, -1));
             }
           } else {
             this.view.showInvalidMove();
+            this.view.clickCard(-1);
+            this.view.setPosn(new Position(-1, -1));
           }
         } else {
           this.view.showInvalidMove();
+          this.view.clickCard(-1);
+          this.view.setPosn(new Position(-1, -1));
         }
       } else if (key.equals("p")) {
         this.model.passMove();
         this.view.clickCard(-1);
+        this.view.setPosn(new Position(-1, -1));
       }
     }
     this.posn = null;
@@ -130,10 +128,17 @@ public class BasicSanguineController implements SanguineController, ViewFeatures
   @Override
   public void whoseTurn(Player player) {
     this.currentTurnPlayer = player;
+    if (this.isOver && !this.wasGameOver) {
+      this.view.showGameOver(model.whoWon(), model.totalScore(model.whoWon()));
+      this.wasGameOver = true;
+    }
+    if (this.currentTurnPlayer == this.player.getPlayer()) {
+      this.player.makeMove(this.model);
+    }
   }
 
   @Override
-  public void hasPlayerMoved(boolean moveMade) {
-
+  public void gameOver(Player player) {
+    this.isOver = true;
   }
 }

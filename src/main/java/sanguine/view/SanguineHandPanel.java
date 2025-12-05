@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import sanguine.controller.PlayerAction;
 import sanguine.controller.ViewFeaturesListener;
 import sanguine.model.ReadOnlySanguine;
 import sanguine.model.card.Card;
@@ -21,7 +22,7 @@ import sanguine.model.cell.Player;
  */
 public class SanguineHandPanel extends JPanel {
   private final ReadOnlySanguine model;
-  private final Player player;
+  private final PlayerAction player;
   private int clickedCard;
   private List<Card> cards;
 
@@ -32,7 +33,7 @@ public class SanguineHandPanel extends JPanel {
    * @param model  is the read-only version of the model.
    * @param player is the player that this hand belongs too.
    */
-  public SanguineHandPanel(ReadOnlySanguine model, Player player) {
+  public SanguineHandPanel(ReadOnlySanguine model, PlayerAction player) {
     super();
     if (model == null || player == null) {
       throw new IllegalArgumentException("Model or player cannot be null.");
@@ -51,8 +52,8 @@ public class SanguineHandPanel extends JPanel {
    */
   private void getCards() {
     List<Card> newCards = new ArrayList<>();
-    for (int cardIndex = 0; cardIndex < model.getHandSize(player); cardIndex++) {
-      Card card = model.getCardInHand(player, cardIndex);
+    for (int cardIndex = 0; cardIndex < model.getHandSize(player.getPlayer()); cardIndex++) {
+      Card card = model.getCardInHand(player.getPlayer(), cardIndex);
       newCards.add(card);
     }
     this.cards = newCards;
@@ -63,17 +64,17 @@ public class SanguineHandPanel extends JPanel {
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g.create();
     this.getCards();
-    for (int cardIndex = 0; cardIndex < model.getHandSize(player); cardIndex++) {
+    for (int cardIndex = 0; cardIndex < model.getHandSize(player.getPlayer()); cardIndex++) {
       if (this.clickedCard == cardIndex) {
         g2d.setColor(Color.MAGENTA);
       } else {
-        if (this.player == Player.PLAYER1) {
+        if (this.player.getPlayer() == Player.PLAYER1) {
           g2d.setColor(new Color(255, 100, 105));
         } else {
           g2d.setColor(new Color(137, 207, 240));
         }
       }
-      int cardWidth = this.getWidth() / model.getHandSize(this.player);
+      int cardWidth = this.getWidth() / model.getHandSize(this.player.getPlayer());
       g2d.fillRect(cardWidth * cardIndex, 0,
           cardWidth * cardIndex + cardWidth, this.getHeight());
     }
@@ -88,7 +89,7 @@ public class SanguineHandPanel extends JPanel {
    */
   private void drawCards(Graphics2D g2d) {
     int fontSize = this.getHeight() / 10;
-    int cardSize = this.getWidth() / model.getHandSize(this.player);
+    int cardSize = this.getWidth() / model.getHandSize(this.player.getPlayer());
     Font font = new Font("Arial", Font.BOLD, fontSize);
     g2d.setFont(font);
     int cardCount = 0;
@@ -117,8 +118,9 @@ public class SanguineHandPanel extends JPanel {
     this.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        double cardIndex = e.getX() * ((double) (model.getHandSize(player)) / getWidth());
-        listener.mouseEventHand((int) cardIndex, player);
+        double cardIndex = e.getX() * ((double) (model.getHandSize(player.getPlayer()))
+            / getWidth());
+        listener.mouseEventHand((int) cardIndex, player.getPlayer());
       }
     });
   }

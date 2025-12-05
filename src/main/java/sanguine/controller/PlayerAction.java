@@ -15,7 +15,7 @@ public interface PlayerAction {
    * @param model is the read only version of the model that the player can use to determine its
    *              move.
    */
-  MoveValues makeMove(ReadOnlySanguine model);
+  void makeMove(ReadOnlySanguine model);
 
   /**
    * Gets the player that is tied to the current implementation.
@@ -29,6 +29,6 @@ public interface PlayerAction {
    *
    * @param listener listens and shi to the publisher.
    */
-  void subscribe(PlayerFeaturesListener listener);
+  void subscribe(PlayerActionsListener listener);
 
 }
