@@ -22,7 +22,7 @@ import sanguine.view.SanguineGuiView;
 /**
  * represents our class which properly delegates the controller.
  */
-public class SanguinePlayerDelegatesProperlyToController {
+public class SanguinePlayerDelegatesProperlyToControllerTest {
 
   Sanguine model = new BasicSanguine();
   List<Card> redDeck = new ArrayList<>();

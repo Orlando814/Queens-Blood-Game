@@ -19,7 +19,7 @@ import sanguine.model.deck.DeckCreatorImpl;
  * info. This means that the sanguine model will send the info and our controllers log will store
  * it for us to test with.
  */
-public class SanguineModelDelegatesProperlyToController {
+public class SanguineModelDelegatesProperlyToControllerTest {
 
   Sanguine model = new BasicSanguine();
   List<Card> redDeck = new ArrayList<>();
