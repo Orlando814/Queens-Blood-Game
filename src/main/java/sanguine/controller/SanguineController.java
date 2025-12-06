@@ -1,7 +1,5 @@
 package sanguine.controller;
 
-import sanguine.model.Sanguine;
-
 /**
  * This is the controller for the Sanguine game. Is responsible for listening to the view and then
  * changing the model to represent the user's actions.

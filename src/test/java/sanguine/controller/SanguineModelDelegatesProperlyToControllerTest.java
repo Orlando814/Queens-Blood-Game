@@ -64,7 +64,7 @@ public class SanguineModelDelegatesProperlyToControllerTest {
     assertEquals("Called whose turn with Player: Player 1", transcript[2]); //p;ace
     assertEquals("Called whose turn with Player: Player 2", transcript[3]); //place
     assertEquals("Called whose turn with Player: Player 1", transcript[4]); //pass
-    assertEquals("Called whose turn with Player: Player 2", transcript[5]);//pass
+    assertEquals("Called whose turn with Player: Player 2", transcript[5]); //pass
     assertEquals("Called gameOver with player: Player 1", transcript[6]); //game over
   }
 }
