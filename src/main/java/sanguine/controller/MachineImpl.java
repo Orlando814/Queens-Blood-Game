@@ -29,6 +29,7 @@ public class MachineImpl implements PlayerAction {
     this.player = player;
   }
 
+
   @Override
   public void makeMove(ReadOnlySanguine model) {
     this.listener.hasMoveBeenMade(this.strategy.implementMove(model, this.player));

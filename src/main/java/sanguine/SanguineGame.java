@@ -32,12 +32,12 @@ public final class SanguineGame {
   public static void main(String[] args) {
     //we have to start with dealing with the default jar arguments
     if (args.length > 0) {
-      int rows = Integer.parseInt(args[1]);
-      int cols = Integer.parseInt(args[4]);
-      String redPath = args[5];
-      String bluePath = args[6];
-      String p1 =  args[7];
-      String p2 =  args[8];
+      int rows = Integer.parseInt(args[0]);
+      int cols = Integer.parseInt(args[1]);
+      String redPath = args[2];
+      String bluePath = args[3];
+      String p1 =  args[4];
+      String p2 =  args[5];
 
       Sanguine model = new BasicSanguine();
       DeckCreator createDeck = new DeckCreatorImpl();
@@ -67,6 +67,7 @@ public final class SanguineGame {
       controllerP1.playGame();
       controllerP2.playGame();
       model.startGame(rows, cols, cardsPlayer1, cardsPlayer2);
+      return;
     }
 
     Sanguine model = new BasicSanguine();

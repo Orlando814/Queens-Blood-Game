@@ -1,12 +1,10 @@
-package sanguine.view;
+package sanguine.controller.mocks;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import sanguine.controller.PlayerAction;
@@ -15,12 +13,16 @@ import sanguine.controller.ViewFeaturesListener;
 import sanguine.model.ReadOnlySanguine;
 import sanguine.model.cell.Player;
 import sanguine.strategy.MoveValues;
+import sanguine.view.Position;
+import sanguine.view.SanguineBoardPanel;
+import sanguine.view.SanguineGuiView;
+import sanguine.view.SanguineHandPanel;
 
 /**
- * This represents the Frame of the GUI that contains two panels. These two panels consist of the
- * board and the user's hand of cards.
+ * This is a mock of the Sanguine frame. It functions exactly as the regular frame would except it
+ * doesn't make the frame visible.
  */
-public class SanguineGuiFrame extends JFrame implements SanguineGuiView, PlayerActionsListener {
+public class SanguineGuiFrameMock extends JFrame implements SanguineGuiView, PlayerActionsListener {
 
   private final SanguineBoardPanel board;
   private final SanguineHandPanel hand;
@@ -34,7 +36,7 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView, PlayerA
    *
    * @param model is a read-only version of the model.
    */
-  public SanguineGuiFrame(ReadOnlySanguine model, PlayerAction player) {
+  public SanguineGuiFrameMock(ReadOnlySanguine model, PlayerAction player) {
     super();
     if (model == null || player == null) {
       throw new IllegalArgumentException("Model or player cannot be null.");
@@ -65,7 +67,7 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView, PlayerA
    */
   @Override
   public void makeVisible() {
-    this.setVisible(true);
+    this.setVisible(false);
   }
 
   /**
@@ -106,16 +108,15 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView, PlayerA
     showMessageDialog(this, "Invalid Move");
   }
 
+  /**
+   * * Will appear when the game has ended and show the winning player / their score.
+   *
+   * @param player is the player that won the game.
+   * @param score  is the winning player's score.
+   * @param type   is the type of end message (game over or tie)
+   */
   @Override
   public void showGameOver(Player player, int score, String type) {
-    if (type.equals("winner")) {
-      showMessageDialog(this, "Game Over"
-          + System.lineSeparator() + "Winning Player: " + player.toString()
-          + System.lineSeparator() + "Player Score: " + score);
-    } else if (type.equals("tie")) {
-      showMessageDialog(this, "Game Over"
-          + System.lineSeparator() + "Tie Game");
-    }
   }
 
   @Override
