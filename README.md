@@ -162,8 +162,14 @@ it should properly function and allow you to see the 5 row by 7 column board!
 - | | | +- sanguine/
 - | | | | +- controller/
 - | | | | | +- BasicSanguineController
-- | | | | | +- FeaturesListener
+- | | | | | +- MachineImpl
+- | | | | | +- ModelFeaturesListener
+- | | | | | +- MoveEnum
+- | | | | | +- PlayerAction
+- | | | | | +- PlayerActionsListener
+- | | | | | +- PlayerImpl
 - | | | | | +- SanguineController
+- | | | | | +- ViewFeaturesListener
 - | | | | +- model/
 - | | | | | +- card/
 - | | | | | | +- BasicCard
@@ -210,6 +216,15 @@ it should properly function and allow you to see the 5 row by 7 column board!
 - | | | | | | +- ThrowsIoExceptionMock
 - | | | | | +- CardExtrasTest
 - | | | | | +- CardReaderTest
+- | | | | +- controller/
+- | | | | | +- mocks/
+- | | | | | | +- SanguineControllerMock
+- | | | | | +- MachineVersusMachineTest
+- | | | | | +- PlayerActionTest
+- | | | | | +- SanguineControllerMockIntegrationTest
+- | | | | | +- SanguineGuiFrameMock
+- | | | | | +- SanguineModelDelegatesProperlyToController
+- | | | | | +- SanguinePlayerDelegatesProperlyToController
 - | | | | +- model/
 - | | | | | +- BoardInputTest
 - | | | | | +- DeckCreatorTest
@@ -222,3 +237,83 @@ it should properly function and allow you to see the 5 row by 7 column board!
 - | | | | | +- SanguineOnlyAllowsMovesToRowTwoColThree
 - | | | | | +- SanguineOnlyAllowsMovesToRowZeroColZeroMock
 - | | | | +- StrategyTests
+
+
+# Changes for Part 3
+
+- Changes from the previous assignment
+  - We made one change to make it so that when we are doing a move, we pass
+  implementation of the controller and changing the pubsub within the controller to no longer be generic.
+  - We also redid the view. Previously there was a JPanel for each card whose parent panel was the entire hand.
+  We redid this to only have a hand panel that draws all the cards. We changed this because we were having trouble
+  deselecting a card after a move was made.
+
+# Additions made / Controller
+
+- Pub-Sub implementations
+  - We had many implementations of pub sub, some working based off of each other. 
+    - In regard to the basic pub-sub that we had in the previous assignment, that has remained the same,
+    and we still use the same listeners. 
+    - We created a new listener interface called ModelFeaturesListener. The controller implements this interface and 
+    listen's for the current player and when the game is over. 
+      - Listener methods are called whoseTurn() & gameOver()
+    - The second listener interface we created was the PlayerActionListener. The view implemented this interface 
+    listen's for when the player makes a move. However, only a machine player actually publishes an event to the view
+    and a human player doesn't.
+      - Listener method is called moveHasBeenMade()
+    
+- In regard to getting the information for that move 
+  - We utilize the pubsub that we previously had for the previous assignment and will merely use that
+        for our human implementation. For our machine, we will reference the strategy and then put that information
+        through the view so that it can be interpreted in the same manner as the human actions.
+- For the implementation of the view
+  - hasMovedBeenMade() Method: When the view receives a notification from the publisher (machine player) it will be given a move and call 
+        several of its listener's methods (controller) to imitate a human player. This allows the machine player to 
+        make a move
+  - showGameOver() Method: When the game is over the controller calls this method which will cause the view to 
+      display a game over message with the winner and score or a tie message
+  - showInvalidMove() Method: When the controller is given an invalid move it calls this method which makes the view
+  display an invalid move message
+
+- Lastly, we have the implementation for our model.
+    - notifyListeners() Method: We have an implementation which will tell the listener everytime a player does
+    some sort of move (pass, placing a card, etc). That listener will then delegate to the 
+    controller, telling it to wait for this player to make a move. Then, we have another listener
+    which checks to see if the game is over. So within the same "notify" method, we just check to see
+    if the game is over, notify the controller if the game is over, and display a screen with the
+    score / player who won.
+
+- Machine and Player implementations who both implement the PlayerActions interface 
+  - Within these two classes we have very simple implementations, the human player does nothing, as its
+  behavior is already dealt with in the view, and the machine player just calls to our listener that is
+  waiting for some sort of move to get the "MoveValues" object to then make the move.
+  - Both implementations a getPlayer() method which returns the Enum Player that they represent
+
+
+- Public Behaviors for our Controller
+  - The only public behavior for our controller is a simple method, playGame() which takes in nothing and 
+  starts our game.
+
+
+# Jar File
+
+- Our jar file is located within the src folder. It should be ran within the parent directory for this project
+with the given file. An example command would be this, 
+  - java -jar f25-hw07-groups-group-The-Best-Group-Ever-dev.jar 5 7 config/red.deck config/blue.deck human human
+    - This would create a game with 5 rows, 7 cols, a red deck, a blue deck, and human p1 and human p2
+  - java -jar f25-hw07-groups-group-The-Best-Group-Ever-dev.jar 5 7 config/red.deck config/blue.deck human strategy1
+    - this would create a game with 5 rows, 7 cols, a red deck, a blue deck, and a human p1 and a first fit p2
+  - The way to configure the game is to input the arguments in the following order:
+    - Row - First input
+    - Col - Second input
+    - Red deck path - Third input (we recommend using config/red.deck)
+    - Blue deck path - Fourth input (we recommend using config/blue.deck)
+    - Player 1 - Fifth input (clarified below)
+    - Player 2 - Sixth input (clarified below)
+      - Player Inputs are the following
+        - "human" -> human input
+        - "strategy1" -> first fit algorithm
+        - "strategy2" -> maximize row algorithm
+  - With this information, move the jar file to the root directory (f25-hw07-groups-group-The-Best-Group-Ever)
+  and then run the program in the terminal with the relevant commands you want.
+  

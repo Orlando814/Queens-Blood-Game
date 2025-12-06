@@ -51,6 +51,7 @@ public interface SanguineGuiView {
    *
    * @param player is the player that won the game.
    * @param score is the winning player's score.
+   * @param type is the type of end message (game over or tie)
    */
-  void showGameOver(Player player, int score);
+  void showGameOver(Player player, int score, String type);
 }

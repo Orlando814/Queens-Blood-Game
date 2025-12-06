@@ -25,15 +25,31 @@ public class PlayerImpl implements PlayerAction {
     this.player = player;
   }
 
+  /**
+   * stub implementation for the human player.
+   *
+   * @return the given player.
+   */
   @Override
   public Player getPlayer() {
     return this.player;
   }
 
+  /**
+   * stub implementation for the human player.
+   *
+   * @param model is the read only version of the model that the player can use to determine its
+   *              move.
+   */
   @Override
   public void makeMove(ReadOnlySanguine model) {
   }
 
+  /**
+   * stub implementation for the human player.
+   *
+   * @param listener listens and shi to the publisher.
+   */
   @Override
   public void subscribe(PlayerActionsListener listener) {
   }

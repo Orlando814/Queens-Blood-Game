@@ -612,11 +612,14 @@ public class BasicSanguine extends DeckCreatorImpl implements Sanguine {
    * Notifies all the listeners that are currently subscribed to this.
    */
   private void notifyListeners() {
-    System.out.println(this.listeners.size());
     for (ModelFeaturesListener listener : this.listeners) {
       listener.whoseTurn(this.curPlayer);
       if (this.isGameOver()) {
-        listener.gameOver(this.whoWon());
+        if (this.totalScore(Player.PLAYER1) == totalScore(Player.PLAYER2)) {
+          listener.gameOver(Player.PLAYER1);
+        } else {
+          listener.gameOver(this.whoWon());
+        }
       }
     }
   }
