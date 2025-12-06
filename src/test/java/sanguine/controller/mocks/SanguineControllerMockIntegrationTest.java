@@ -8,7 +8,6 @@ import sanguine.model.Sanguine;
 import sanguine.model.card.BasicCard;
 import sanguine.model.card.Card;
 import sanguine.model.cell.Player;
-import sanguine.strategy.MoveValues;
 import sanguine.view.Position;
 import sanguine.view.SanguineGuiView;
 
@@ -21,7 +20,7 @@ public class SanguineControllerMockIntegrationTest implements SanguineController
     ViewFeaturesListener, ModelFeaturesListener {
 
   private final SanguineGuiView view;
-  private Sanguine model;
+  private final Sanguine model;
   private Position posn; //represents the values for the given move
   private Integer cardPos; //represents the posn for the given
   private final PlayerAction player; //the player for this given controller
@@ -52,14 +51,6 @@ public class SanguineControllerMockIntegrationTest implements SanguineController
     this.model.subscribe(this);
     this.currentTurnPlayer = this.player.getPlayer();
     this.view.makeVisible();
-  }
-
-  private void makeMove(MoveValues move) {
-    if (move == null) {
-      model.passMove();
-    } else {
-      this.model.placeCard(move.getCard(), move.getRow(), move.getCol());
-    }
   }
 
   @Override

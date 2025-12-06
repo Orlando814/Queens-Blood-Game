@@ -5,8 +5,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import sanguine.controller.PlayerAction;

@@ -2,7 +2,6 @@ package sanguine.controller;
 
 import sanguine.model.ReadOnlySanguine;
 import sanguine.model.cell.Player;
-import sanguine.strategy.MoveValues;
 
 /**
  * Represents a player that is either human or machine. These act as publishers and can make moves.

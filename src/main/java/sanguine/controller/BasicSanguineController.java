@@ -53,6 +53,7 @@ public class BasicSanguineController implements SanguineController, ViewFeatures
 
   /**
    * basic method to, given the coordinates from the view, set the current position for the board.
+   *
    * @param x the x coordinate.
    * @param y the y coordinate.
    */
@@ -76,7 +77,7 @@ public class BasicSanguineController implements SanguineController, ViewFeatures
    * will select the card from a given players hand by giving the index, and the player.
    *
    * @param cardIndex is the index of the card the user pressed in the hand.
-   * @param p is the player that this hand belong to.
+   * @param p         is the player that this hand belong to.
    */
   @Override
   public void mouseEventHand(int cardIndex, Player p) {

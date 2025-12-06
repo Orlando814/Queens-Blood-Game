@@ -4,7 +4,6 @@ import java.io.IOException;
 import sanguine.controller.ModelFeaturesListener;
 import sanguine.controller.SanguineController;
 import sanguine.controller.ViewFeaturesListener;
-import sanguine.model.Sanguine;
 import sanguine.model.cell.Player;
 
 /**

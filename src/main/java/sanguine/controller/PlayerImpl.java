@@ -2,7 +2,6 @@ package sanguine.controller;
 
 import sanguine.model.ReadOnlySanguine;
 import sanguine.model.cell.Player;
-import sanguine.strategy.MoveValues;
 
 /**
  * This represents the implementation of a human player. Since a human is making all the moves
