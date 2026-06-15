@@ -69,7 +69,7 @@ public class SanguineGuiFrame extends JFrame implements SanguineGuiView, PlayerA
   /**
    * will subscriber to the publisher.
    *
-   * @param listener listens and shi to the listener.
+   * @param listener listens to the listener.
    */
   @Override
   public void subscribe(ViewFeaturesListener listener) {
