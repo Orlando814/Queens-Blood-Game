@@ -33,7 +33,7 @@ public class SanguineControllerMock implements SanguineController, ViewFeaturesL
     try {
       log.append("Started Game\n");
     } catch (IOException e) {
-      int sixSeven = 67;
+      throw new IllegalStateException(e);
     }
   }
 
@@ -42,7 +42,7 @@ public class SanguineControllerMock implements SanguineController, ViewFeaturesL
     try {
       log.append("Called whose turn with Player: " + player + "\n");
     } catch (IOException e) {
-      int sixSeven = 67;
+      throw new IllegalStateException(e);
     }
   }
 
@@ -51,7 +51,7 @@ public class SanguineControllerMock implements SanguineController, ViewFeaturesL
     try {
       log.append("Called gameOver with player: " + player + "\n");
     } catch (IOException e) {
-      int sixSeven = 67;
+      throw new IllegalStateException(e);
     }
   }
 
@@ -60,7 +60,7 @@ public class SanguineControllerMock implements SanguineController, ViewFeaturesL
     try {
       log.append("Called mouseEventBoard with X: " + x + " Y: " + y + "\n");
     } catch (IOException e) {
-      int sixSeven = 67;
+      throw new IllegalStateException(e);
     }
   }
 
@@ -70,7 +70,7 @@ public class SanguineControllerMock implements SanguineController, ViewFeaturesL
       log.append("Called mouseEventHand with cardIndex: " + cardIndex + " and player: "
           + player + "\n");
     } catch (IOException e) {
-      int sixSeven = 67;
+      throw new IllegalStateException(e);
     }
   }
 
@@ -79,7 +79,7 @@ public class SanguineControllerMock implements SanguineController, ViewFeaturesL
     try {
       log.append("Called keyClicked with key: " + key + "\n");
     } catch (IOException e) {
-      int sixSeven = 67;
+      throw new IllegalStateException(e);
     }
   }
 }
