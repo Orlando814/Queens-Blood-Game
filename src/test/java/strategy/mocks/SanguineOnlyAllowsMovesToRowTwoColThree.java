@@ -51,7 +51,7 @@ public class SanguineOnlyAllowsMovesToRowTwoColThree implements Sanguine {
   /**
    * will subscriber to the publisher.
    *
-   * @param listener listens and shi to the publisher.
+   * @param listener listens to the publisher.
    */
   @Override
   public void subscribe(ModelFeaturesListener listener) {
