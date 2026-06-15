@@ -123,7 +123,6 @@ public class GreedyMove implements Strategy {
     if ((curPlayerScore > otherPlayerScore)
         || curPlayerScore == otherPlayerScore) {
       return 0; //this is because we want our implementation to only worry about increasing past
-      //row score and I accidentally just made a normal greedy algorithm
     }
     int diff = otherPlayerScore - curPlayerScore;
     if (diff < cardValue) {
