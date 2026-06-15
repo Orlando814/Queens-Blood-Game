@@ -70,7 +70,7 @@ public class BoardInput {
   }
 
   /**
-   * will add the card to the given boardInput implementation (just uses the builder lol).
+   * will add the card to the given boardInput implementation (just uses the builder).
    */
   public void addCard(Card c) {
     this.card = c;
