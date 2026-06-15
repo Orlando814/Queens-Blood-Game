@@ -319,7 +319,7 @@ public class SanguineModelTest {
   //this test is funny, testing after passing 10 times we literally dont have cards left
   //and will just add nothing.
   @Test
-  public void testSizeOfHandAfterPassingOneMillionFuckingTimes() {
+  public void testSizeOfHandAfterPassingOneMillionTimes() {
     model.startGame(3, 5, redDeck, blueDeck);
     int oldP1 = model.getHandSize(Player.PLAYER1);
     int oldP2 = model.getHandSize(Player.PLAYER2);
