@@ -209,7 +209,6 @@ public class SanguineBoardPanel extends JPanel {
   }
 
   /**
-   * funny haha lol.
    *
    * @param g2d graphics object
    * @param x1 x1 of the line
