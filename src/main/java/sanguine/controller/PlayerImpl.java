@@ -47,7 +47,7 @@ public class PlayerImpl implements PlayerAction {
   /**
    * stub implementation for the human player.
    *
-   * @param listener listens and shi to the publisher.
+   * @param listener listens to the publisher.
    */
   @Override
   public void subscribe(PlayerActionsListener listener) {
