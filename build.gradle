@@ -55,4 +55,5 @@ jar {
     manifest {
         attributes 'Main-Class': 'sanguine.SanguineGame'
     }
+    archiveBaseName = 'queens-blood'
 }
