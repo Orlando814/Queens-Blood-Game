@@ -94,7 +94,7 @@ public class DeckCreatorTest {
   @Test (expected = IllegalArgumentException.class)
   public void testCreateDeckWithInvalidAmountOfCards() {
     DeckCreator create = new DeckCreatorImpl();
-    List<Card> blueDeck = create.createDeck(Player.PLAYER2, "config/fuckedup.deck");
+    List<Card> blueDeck = create.createDeck(Player.PLAYER2, "config/messedUp.deck");
   }
 
   @Test
