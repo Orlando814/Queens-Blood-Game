@@ -114,7 +114,7 @@ public class SanguineModelTest {
     model.startGame(6, -1, redDeck, blueDeck);
   }
 
-  //test to make sure the board is properly instantiated with all that shi
+  //test to make sure the board is properly instantiated
   @Test
   public void testSanguineModelGameValidBoard() {
     model.startGame(3, 5, redDeck, blueDeck);
@@ -137,7 +137,7 @@ public class SanguineModelTest {
   }
 
   //test to make sure it also works with different rows and cols
-  //test to make sure the board is properly instantiated with all that shi
+  //test to make sure the board is properly instantiated
   @Test
   public void testSanguineModelGameValidBoardDiffRowAndCol() {
     model.startGame(6, 7, redDeck, blueDeck);
